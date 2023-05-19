@@ -1,0 +1,29 @@
+.appbar {
+  background-color: #fffafa;
+  color: black;
+}
+
+.brand {
+  display: flex;
+  font-family: monospace;
+  font-weight: 700;
+  letter-spacing: 0.3rem;
+  color: black;
+  margin-left: 20px;
+}
+
+.logo {
+  display: flex;
+  margin-right: 8px;
+}
+
+.brand-name {
+  text-decoration: none;
+  flex-grow: 1;
+}
+
+.login-btn {
+  margin: 16px 0;
+  color: black;
+  display: block;
+}
