@@ -10,7 +10,7 @@ export const loginUser = createAsyncThunk("user", async (body) => {
   let res = await fetch("", {
     method: "POST",
     headers: {
-      "Content-Type": "application/josn",
+      "Content-Type": "application/json",
       Authorization: localStorage.getItem("token"),
     },
     body: JSON.stringify(body),

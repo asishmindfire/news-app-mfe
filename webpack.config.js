@@ -47,8 +47,12 @@ module.exports = (_, argv) => ({
         category_sidebar:
           "category_sidebar@http://localhost:5001/remoteEntry.js",
         news_layout: "news_layout@http://localhost:8081/remoteEntry.js",
+        news_app: "news_app@http://localhost:3000/remoteEntry.js",
       },
-      exposes: {},
+      exposes: {
+        "./PubSub": "./src/events/globalEvent.jsx",
+        "./Store": "./src/store/index.js",
+      },
       shared: {
         ...deps,
         react: {
