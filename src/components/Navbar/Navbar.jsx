@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import FeedIcon from '@mui/icons-material/Feed';
+import FeedIcon from "@mui/icons-material/Feed";
 import LoginDialog from "../LoginDialog/LoginDialog";
 import classes from "./Navbar.module.css";
 
@@ -27,19 +27,18 @@ const Navbar = () => {
     setOpenLoginDialog(false);
   };
 
-
   return (
     <>
-      <AppBar position="static" className={classes.appbar}>
+      <AppBar
+        position="fixed"
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        className={classes.appbar}
+      >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <FeedIcon className={classes.logo} />
-            <Link to="/" className={classes['brand-name']}>
-              <Typography
-                variant="h6"
-                noWrap
-                className={classes.brand}
-              >
+            <Link to="/" className={classes["brand-name"]}>
+              <Typography variant="h6" noWrap className={classes.brand}>
                 NEWS FOR YOU
               </Typography>
             </Link>
@@ -57,7 +56,7 @@ const Navbar = () => {
                   onClick={() => {
                     setOpenLoginDialog(true);
                   }}
-                  className={classes['login-btn']}
+                  className={classes["login-btn"]}
                 >
                   Login
                 </Button>
