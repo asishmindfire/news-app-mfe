@@ -8,7 +8,7 @@ import {
   DialogTitle,
   Slide,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/slices/UserSlice";
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -23,6 +23,7 @@ const LoginDialog = ({ open, handleClose, handleSubmit }) => {
     event.preventDefault();
     handleSubmit(username, password);
     dispatch(loginUser({ username, password }));
+    
   };
 
   const handleEnterKeyDown = (event) => {

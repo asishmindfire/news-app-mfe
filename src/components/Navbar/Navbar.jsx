@@ -14,10 +14,15 @@ import { Link } from "react-router-dom";
 import FeedIcon from "@mui/icons-material/Feed";
 import LoginDialog from "../LoginDialog/LoginDialog";
 import classes from "./Navbar.module.css";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { addUser } from "../../store/slices/UserSlice";
 
 const Navbar = () => {
   const [openLoginDialog, setOpenLoginDialog] = useState(false);
-
+  const user = useSelector((state) => state.user.user);
+  console.log(`nmc`, user);
+  const dispatch = useDispatch();
   const handleLoginSubmit = (username, password) => {
     console.log(username, password);
     setOpenLoginDialog(false);
@@ -26,6 +31,11 @@ const Navbar = () => {
   const handleLoginClose = () => {
     setOpenLoginDialog(false);
   };
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    dispatch(addUser( JSON.parse(user) ));
+  },[]);
 
   return (
     <>
@@ -43,13 +53,13 @@ const Navbar = () => {
               </Typography>
             </Link>
             <Box sx={{ flexGrow: 0 }}>
-              {false ? (
+              {user?.email ? (
                 <>
-                  <Tooltip title="Open profile">
+                  {/* <Tooltip title="Open profile"> */}
                     <IconButton sx={{ p: 0 }}>
-                      <Avatar> A </Avatar>
+                      <Avatar> {user?.name.substring(0, 1)} </Avatar>
                     </IconButton>
-                  </Tooltip>
+                  {/* </Tooltip> */}
                 </>
               ) : (
                 <Button

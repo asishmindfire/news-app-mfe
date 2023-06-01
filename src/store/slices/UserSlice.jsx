@@ -1,22 +1,34 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+
 
 let initialState = {
-  user: "",
+  user: {},
   token: "",
   loading: false,
 };
 
 export const loginUser = createAsyncThunk("user", async (body) => {
-  let res = await fetch("", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token"),
-    },
-    body: JSON.stringify(body),
-  });
-  return await res.json();
+  try {
+    let res = await fetch("http://localhost:8086/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(`Error while login -> `, error);
+  }
 });
+
+// {
+//   "email": "newsuser@mailinator.com",
+//   "password": "pass@12345"
+// }
 
 const userSlice = createSlice({
   name: "user",
@@ -27,7 +39,8 @@ const userSlice = createSlice({
       state.token = localStorage.getItem("token");
     },
     addUser(state, action) {
-      state.user = localStorage.getItem("user");
+      console.log(`-->`, action.payload);
+      state.user = action.payload;
     },
   },
 
@@ -35,12 +48,15 @@ const userSlice = createSlice({
     [loginUser.pending]: (state, action) => {
       state.loading = true;
     },
-    [loginUser.fulfilled]: (state, { payload: { user, token } }) => {
+    [loginUser.fulfilled]: (state, { payload: { data, token } }) => {
+      console.log(`===>1`, data);
+      console.log(`===>2`, token);
+
       state.loading = false;
       state.token = token;
-      state.user = user;
+      state.user = data;
       localStorage.setItem("token", JSON.stringify(token));
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(data));
     },
     [loginUser.rejected]: (state, action) => {
       state.loading = true;
